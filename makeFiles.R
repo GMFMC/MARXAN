@@ -10,7 +10,15 @@ current.folder <- "K:/marxanAuto/seed"
 list.of.files <- list.files(current.folder, full.names=TRUE, pattern = "\\.exe")
 newFolder <- folderName
 file.copy(list.of.files, newFolder)
-  }
+}
+
+### in order to copy all files/folders make the following changes###
+# 
+# list.of.files <- list.files(current.folder,full.names=TRUE,include.dirs = TRUE) 
+# file.copy(list.of.files, newFolder,recursive=TRUE)
+
+##################################################################
+
 
 ## Later, will put this into loop above. 
 setwd(paste0("K:/marxanAuto/", newFolder))
