@@ -26,4 +26,15 @@ out0.10sol <- out0.10[,2]
 x@data$out0.10sol <- out0.10sol
 
 writeOGR(x,"X:/Claire/dump/treatment","allSols",driver="ESRI Shapefile")
+library(raster)
+setwd("X:/Claire/dump/treatment")
+
+x <- readOGR(dsn="allSols.shp",layer="allSols")
+r<- raster()
+extent(r)<- extent(x)
+xR <- rasterize(x,r,field=x@data[,14],fun="mean",na.rm=TRUE)
+closeAllConnections()
+
+
+
 
