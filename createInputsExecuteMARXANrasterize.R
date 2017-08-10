@@ -3,17 +3,17 @@ library(rgdal)
 
 ### To execute Marxan in loop
 
+w <- seq(0.01,0.20, by = 0.01)
 
-
-for(i in c(0.01,0.02,0.05,0.10)){
+for(i in w){
 #setwd("X:/Claire/dump")
- setwd("C:/Users/claire.GMFMC/Desktop/WFH files/dump")
+ setwd("X:/Claire/Management Strategy Evaluation/MARXAN_RUNS")
 ### Create directory with treatment name, copy redundant files/folders into new directory
 
 folderName <- paste0("treat",i)
 dir.create(folderName)
 #current.folder <- "X:/Claire/dump/MARXAN-copy"
- current.folder <- "C:/Users/claire.GMFMC/Desktop/WFH files/dump/MARXAN-copy"
+ current.folder <- "X:/Claire/Management Strategy Evaluation/MARXAN_RUNS/MARXAN-copy"
 list.of.files <- list.files(current.folder,full.names=TRUE,include.dirs = TRUE)
 newFolder <- folderName
 file.copy(list.of.files, newFolder,recursive=TRUE)
@@ -33,7 +33,7 @@ status <- x@data$status
 xloc <- z$X1
 yloc <- z$X2
 pu <- data.frame(cbind(id,cost,status,xloc,yloc)) 
-write.table(pu,paste0("C:/Users/claire.GMFMC/Desktop/WFH files/dump/",newFolder,"/input/pu.dat"),
+write.table(pu,paste0("X:/Claire/Management Strategy Evaluation/MARXAN_RUNS/",newFolder,"/input/pu.dat"),
             sep="\t",quote=FALSE,row.names=FALSE)
 
 ##### write spec.dat file ####
@@ -50,7 +50,7 @@ spf <- c(1.0,1.0,1.0)
 name <- c("stony","black","octo")
 
 spec <- data.frame(cbind(id,prop,target,target2,spf,name))
-write.table(spec,paste0("C:/Users/claire.GMFMC/Desktop/WFH files/dump/",newFolder,"/input/spec.dat"),
+write.table(spec,paste0("X:/Claire/Management Strategy Evaluation/MARXAN_RUNS/",newFolder,"/input/spec.dat"),
             sep="\t",quote=FALSE,row.names=FALSE)
 #### write puvspr.dat ####
 y <- x@data
@@ -86,19 +86,25 @@ puvspr <- rbind(seven,eight,nine)
 puvspr$pu <- as.numeric(as.character(puvspr$pu))
 puvspr <- arrange(puvspr,pu)
 
-write.table(puvspr,paste0("C:/Users/claire.GMFMC/Desktop/WFH files/dump/",newFolder,"/input/puvspr.dat"),
+write.table(puvspr,paste0("X:/Claire/Management Strategy Evaluation/MARXAN_RUNS/",newFolder,"/input/puvspr.dat"),
             sep="\t",quote=FALSE,row.names=FALSE)
 
 #### puvspr_sporder.dat file ####
 
 puvspr_sporder <- arrange(puvspr,species)
 
-write.table(puvspr_sporder,paste0("C:/Users/claire.GMFMC/Desktop/WFH files/dump/",newFolder,"/input/puvspr_sporder.dat"),
+write.table(puvspr_sporder,paste0("X:/Claire/Management Strategy Evaluation/MARXAN_RUNS/",newFolder,"/input/puvspr_sporder.dat"),
             sep="\t",quote=FALSE,row.names=FALSE)
 
-setwd(paste0("C:/Users/claire.GMFMC/Desktop/WFH files/dump/", newFolder))
+setwd(paste0("X:/Claire/Management Strategy Evaluation/MARXAN_RUNS/", newFolder))
 system("Marxan_x64.exe",wait=T,invisible=T, input="Marxan_x64")
 }# Call Marxan to execute
+
+
+
+
+
+
 
 ### Solutions loop ###
 library(plyr)
